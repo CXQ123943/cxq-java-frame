@@ -59,25 +59,4 @@ public class AppStartTest {
         System.out.println(student.getName());
         app.close();
     }
-
-    @Test
-    public void buildBeanByConstructor() {
-        ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("classpath:spring/start/app-by-constructor.xml");
-        app.getBean(User.class);
-        app.close();
-    }
-
-    @Test
-    public void buildBeanByStaticFactory() {
-        ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("classpath:spring/start/app-by-static-factory.xml");
-        app.getBean(User.class);
-        app.close();
-    }
-
-    @Test
-    public void buildBeanByDynamicFactory() {
-        ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("spring/start/app-by-dynamic-factory.xml");
-        app.getBean(User.class);
-        app.close();
-    }
 }
