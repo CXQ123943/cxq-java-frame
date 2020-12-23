@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.steven.pojo.Emp">
+        <property name="name" value="赵四"/>
+        <property name="age" value="15"/>
+
+        <property name="hobby">
+            <array>
+                <value>抽烟</value>
+                <value>喝酒</value>
+                <value>烫头</value>
+            </array>
+        </property>
+
+        <property name="userList">
+            <list>
+                <value>Lili</value>
+                <value>HanMeimei</value>
+            </list>
+        </property>
+
+        <property name="userSet">
+            <set>
+                <value>clerek</value>
+                <value>manger</value>
+            </set>
+        </property>
+
+        <property name="userMap">
+            <map>
+                <entry key="name" value="刘能"/>
+                <entry key="age" value="21"/>
+            </map>
+        </property>
+
+        <property name="jdbc">
+            <props>
+                <prop key="driver">com.mysql.cj.jdbc.Driver</prop>
+                <prop key="url">jdbc:mysql://127.0.0.1:3306/steven</prop>
+                <prop key="user">root</prop>
+                <prop key="password">root</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
