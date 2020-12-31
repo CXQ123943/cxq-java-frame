@@ -10,9 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 import javax.sql.DataSource;
 
 /**
- * '@PropertySource("classpath:jdbc/db.properties")' 相当于
+ * '@PropertySource("classpath:pojo/db.properties")' 相当于
  * <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
- *     <property name="location" value="classpath:jdbc/db.properties"/>
+ *     <property name="location" value="classpath:pojo/db.properties"/>
  * </bean>
  * @author JoeZhou
  */
@@ -36,10 +36,10 @@ public class DataSourceConfig {
     /**
      * 相当于：
      * <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-     *     <property name="driverClass" value="${jdbc.driver}"/>
-     *     <property name="jdbcUrl" value="${jdbc.url}"/>
-     *     <property name="username" value="${jdbc.user}"/>
-     *     <property name="password" value="${jdbc.password}"/>
+     *     <property name="driverClass" value="${pojo.driver}"/>
+     *     <property name="jdbcUrl" value="${pojo.url}"/>
+     *     <property name="username" value="${pojo.user}"/>
+     *     <property name="password" value="${pojo.password}"/>
      *     <property name="maxConnectionsPerPartition" value="100"/>
      *     <property name="minConnectionsPerPartition" value="5"/>
      * </bean>
