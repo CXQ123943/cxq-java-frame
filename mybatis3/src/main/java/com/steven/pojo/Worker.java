@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student implements Serializable {
+public class Worker implements Serializable {
     private Integer id;
     private String name;
     private Integer gender;
