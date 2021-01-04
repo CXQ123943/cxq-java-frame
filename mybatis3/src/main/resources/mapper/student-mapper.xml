@@ -4,8 +4,12 @@
 
 <mapper namespace="studentSpace">
 
-    <insert id="insert" parameterType="com.steven.pojo.Student" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO mybatis.`student` (`id`, `name`, `gender`, `age`, `info`)
+    <cache eviction="LRU" readOnly="true" size="1024"/>
+
+    <sql id="cols">`id`, `name`, `gender`, `age`, `info`</sql>
+
+    <insert id="insert" parameterType="student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mybatis.`student` (<include refid="cols"/> )
         VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
     </insert>
 
@@ -19,16 +23,30 @@
         VALUES (#{id}, #{name}, #{gender}, #{age}, #{info})
     </insert>
 
-    <select id="findOneById" resultType="com.steven.pojo.Student">
+    <select id="findOneById" resultType="student">
         SELECT `id`, `name`, `gender`, `age`, `info`
         FROM mybatis.`student`
         WHERE `id` = #{id}
     </select>
 
-    <select id="findLikeName" resultType="com.steven.pojo.Student">
+    <select id="findLikeName" resultType="student">
         SELECT `id`, `name`, `gender`, `age`, `info`
         FROM mybatis.`student`
         WHERE `name` like "%"#{name}"%"
     </select>
+
+    <update id="updateById">
+        UPDATE mybatis.`student`
+        SET `name` = #{name},
+            `age` = #{age},
+            `gender` = #{gender},
+            `info` = #{info}
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM mybatis.`student`
+        WHERE `id` = #{id}
+    </delete>
 
 </mapper>

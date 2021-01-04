@@ -1,0 +1,38 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.mapper.WorkerMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mybatis.`worker` (`id`, `name`, `gender`, `age`, `info`)
+        VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
+    </insert>
+
+    <select id="findOneById" resultType="worker">
+        SELECT `id`, `name`, `gender`, `age`, `info`
+        FROM mybatis.`worker`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="findLikeName" resultType="worker">
+        SELECT `id`, `name`, `gender`, `age`, `info`
+        FROM mybatis.`worker`
+        WHERE `name` like CONCAT('%', #{name}, '%')
+    </select>
+
+    <update id="updateById">
+        UPDATE mybatis.`worker`
+        SET `name` = #{name},
+            `age` = #{age},
+            `gender` = #{gender},
+            `info` = #{info}
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM mybatis.`worker`
+        WHERE `id` = #{id}
+    </delete>
+
+</mapper>
