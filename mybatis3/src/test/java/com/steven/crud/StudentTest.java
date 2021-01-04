@@ -11,12 +11,12 @@ import org.junit.Test;
  * @version 1.0
  */
 public class StudentTest {
+    private SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
 
     @Test
     public void insert() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         Student zhaosi = new Student(null, "赵四", 1, 58, "亚洲舞王");
-        Student liunneng = new Student(5, "刘能", 0, 19, "玉田花圃");
+        Student liunneng = new Student(null, "刘能", 0, 19, "玉田花圃");
         SqlSession session = factory.openSession();
         try {
             session.insert("studentSpace.insert", zhaosi);
@@ -35,7 +35,6 @@ public class StudentTest {
 
     @Test
     public void insertWithSelectKey() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         Student dajiao = new Student(null, "大脚", 2, 18, "大脚超市");
         SqlSession session = factory.openSession();
         try {
@@ -52,7 +51,6 @@ public class StudentTest {
 
     @Test
     public void findOneById() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         Student dajiao = new Student();
         dajiao.setId(10);
         SqlSession session = factory.openSession();
@@ -72,11 +70,40 @@ public class StudentTest {
 
     @Test
     public void selectList() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         try (SqlSession session = factory.openSession()) {
             System.out.println(session.selectList("studentSpace.findLikeName", "大"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void updateBuId() {
+        Student dajiao = new Student(10, "谢广坤", 2, 60, "广坤山货");
+        SqlSession session = factory.openSession();
+        try {
+            session.selectOne("studentSpace.updateById", dajiao);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Test
+    public void deleteById() {
+        SqlSession session = factory.openSession();
+        try {
+            session.delete("studentSpace.deleteById", 11);
+            session.commit();
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
 }
