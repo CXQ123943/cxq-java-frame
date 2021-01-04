@@ -17,9 +17,9 @@ public class MyBatisUtilTest {
 
     @Test
     public void myBatisUtil() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml");
-        System.out.println(MyBatisUtil.getFactory("mybatis-student.xml").hashCode());
-        System.out.println(MyBatisUtil.getFactory("mybatis-student.xml").hashCode());
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
+        System.out.println(MyBatisUtil.getFactory("mybatis-crud.xml").hashCode());
+        System.out.println(MyBatisUtil.getFactory("mybatis-crud.xml").hashCode());
         try (SqlSession session = factory.openSession()) {
             System.out.println(session.getConnection().isClosed());
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class MyBatisUtilTest {
 
     @Test
     public void myBatisUtilWithEnv() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml", "test");
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml", "test");
         try (SqlSession session = factory.openSession()) {
             System.out.println(session.getConnection().isClosed());
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class MyBatisUtilTest {
     public void myBatisUtilWithProps() throws IOException {
         Properties props = new Properties();
         props.load(new FileInputStream("src/main/resources/jdbc/db.properties"));
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml", props);
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml", props);
         try (SqlSession session = factory.openSession()) {
             System.out.println(session.getConnection().isClosed());
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class MyBatisUtilTest {
     public void myBatisUtilWithEnvAndProps() throws IOException {
         Properties props = new Properties();
         props.load(new FileInputStream("src/main/resources/jdbc/db.properties"));
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml", "test", props);
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml", "test", props);
         try (SqlSession session = factory.openSession()) {
             System.out.println(session.getConnection().isClosed());
         } catch (Exception e) {

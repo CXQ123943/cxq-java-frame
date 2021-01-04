@@ -14,7 +14,7 @@ public class StudentTest {
 
     @Test
     public void insert() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml");
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         Student zhaosi = new Student(null, "赵四", 1, 58, "亚洲舞王");
         Student liunneng = new Student(5, "刘能", 0, 19, "玉田花圃");
         SqlSession session = factory.openSession();
@@ -35,7 +35,7 @@ public class StudentTest {
 
     @Test
     public void insertWithSelectKey() {
-        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-student.xml");
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
         Student dajiao = new Student(null, "大脚", 2, 18, "大脚超市");
         SqlSession session = factory.openSession();
         try {
@@ -48,6 +48,35 @@ public class StudentTest {
         } finally {
             session.close();
         }
+    }
 
+    @Test
+    public void findOneById() {
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
+        Student dajiao = new Student();
+        dajiao.setId(10);
+        SqlSession session = factory.openSession();
+        try {
+            Student resultA = session.selectOne("studentSpace.findOneById", 10);
+            Student resultB = session.selectOne("studentSpace.findOneById", dajiao);
+            session.commit();
+            System.out.println(resultA);
+            System.out.println(resultB);
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    @Test
+    public void selectList() {
+        SqlSessionFactory factory = MyBatisUtil.getFactory("mybatis-crud.xml");
+        try (SqlSession session = factory.openSession()) {
+            System.out.println(session.selectList("studentSpace.findLikeName", "大"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
