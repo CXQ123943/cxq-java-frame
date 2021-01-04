@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author CXQ
- * @version 1.0
+ * @version 1.0k
  */
 @Data
 @AllArgsConstructor
