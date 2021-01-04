@@ -4,4 +4,31 @@
 
 <mapper namespace="studentSpace">
 
+    <insert id="insert" parameterType="com.steven.pojo.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mybatis.`student` (`id`, `name`, `gender`, `age`, `info`)
+        VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
+    </insert>
+
+    <insert id="insertWithSelectKey">
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            SELECT last_insert_id()
+        </selectKey>
+
+
+        INSERT INTO mybatis.`student` (`id`, `name`, `gender`, `age`, `info`)
+        VALUES (#{id}, #{name}, #{gender}, #{age}, #{info})
+    </insert>
+
+    <select id="findOneById" resultType="com.steven.pojo.Student">
+        SELECT `id`, `name`, `gender`, `age`, `info`
+        FROM mybatis.`student`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="findLikeName" resultType="com.steven.pojo.Student">
+        SELECT `id`, `name`, `gender`, `age`, `info`
+        FROM mybatis.`student`
+        WHERE `name` like "%"#{name}"%"
+    </select>
+
 </mapper>
