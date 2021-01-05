@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.mapper.UserMapper">
+
+    <!--二级缓存-->
+    <cache eviction="LRU" readOnly="true" size="1024"/>
+
+    <select id="findLikeNameAndGender" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info`
+        FROM mybatis.`user`
+        WHERE `name` like CONCAT('%', #{name}, '%') AND `gender` = #{gender}
+    </select>
+
+    <select id="findLikeNameAndGenderByIf" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user` WHERE
+        <if test='name != null'>
+            `name` like concat('%', #{name}, '%')
+        </if>
+        <if test='gender != null'>
+            `gender` = #{gender}
+        </if>
+    </select>
+
+</mapper>
