@@ -2,12 +2,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="studentSpace">
+<mapper namespace="com.steven.mapper.StudentMapper">
 
+    <!--二级缓存-->
     <cache eviction="LRU" readOnly="true" size="1024"/>
 
     <sql id="cols">`id`, `name`, `gender`, `age`, `info`</sql>
 
+    <!--
+    useGeneratedKeys="true"：启用主键回注机制,
+    keyProperty="id"：指定主键回注到哪个字段中。
+    -->
     <insert id="insert" parameterType="student" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO mybatis.`student` (<include refid="cols"/> )
         VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
@@ -32,7 +37,7 @@
     <select id="findLikeName" resultType="student">
         SELECT `id`, `name`, `gender`, `age`, `info`
         FROM mybatis.`student`
-        WHERE `name` like "%"#{name}"%"
+        WHERE `name` like CONCAT('%', #{name}, '%')
     </select>
 
     <update id="updateById">
@@ -48,5 +53,15 @@
         DELETE FROM mybatis.`student`
         WHERE `id` = #{id}
     </delete>
+
+    <select id="findAll" resultMap="findAllMap">
+        SELECT <include refid="cols"/>
+        FROM mybatis.`student`
+    </select>
+
+    <resultMap id="findAllMap" type="student">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="string"/>
+    </resultMap>
 
 </mapper>
