@@ -10,7 +10,8 @@
     <select id="findLikeNameAndGender" resultType="user">
         SELECT `id`, `name`, `gender`, `age`, `info`
         FROM mybatis.`user`
-        WHERE `name` like CONCAT('%', #{name}, '%') AND `gender` = #{gender}
+        WHERE `name` like CONCAT('%', #{name}, '%')
+          AND `gender` = #{gender}
     </select>
 
     <select id="findLikeNameAndGenderByIf" resultType="user">
@@ -21,6 +22,143 @@
         <if test='gender != null'>
             `gender` = #{gender}
         </if>
+    </select>
+
+    <select id="findLikeNameAndGenderByWhere" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <if test='name != null'>
+                AND `name` like concat('%', #{name}, '%')
+            </if>
+            <if test='gender != null'>
+                AND `gender` = #{gender}
+            </if>
+        </where>
+    </select>
+
+    <select id="findLikeNameAndGenderByTrim" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test='name != null'>
+                AND `name` like concat('%', #{name}, '%')
+            </if>
+            <if test='gender != null'>
+                AND `gender` = #{gender}
+            </if>
+        </trim>
+    </select>
+
+    <select id="findLikeNameAndGenderByChoose" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <choose>
+                <when test='name != null'>
+                    AND `name` like concat('%', #{name}, '%')
+                </when>
+                <when test='gender != null'>
+                    AND `gender` = #{gender}
+                </when>
+                <otherwise>
+                    AND `id` = #{id}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="findWithArrayByForEach" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <foreach collection="array" item="e" open="id in (" close=")" separator=",">
+                ${e}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="findWithListByForEach" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <foreach collection="list" item="e" open="id in (" close=")" separator=",">
+                ${e}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="findWithMapByForEach" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <foreach collection="ids" item="e" open="id in (" close=")" separator=",">
+                ${e}
+            </foreach>
+        </where>
+    </select>
+
+    <update id="updateByIdWithSet">
+        UPDATE mybatis.`user`
+        <set>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="gender != null">`gender` = #{gender},</if>
+            <if test="age != null">`age` = #{age},</if>
+        </set>
+        <where>
+            `id` = #{id}
+        </where>
+    </update>
+
+    <update id="updateByIdWithTrim">
+        UPDATE mybatis.`user`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test='name != null'>`name` = #{name},</if>
+            <if test='age != null'>`age` = #{age},</if>
+            <if test='gender != null'>`gender` = #{gender},</if>
+        </trim>
+        <where>
+            `id` = #{id}
+        </where>
+    </update>
+
+    <select id="findByNameAndGender" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <if test='param1 != null'>
+                AND `name` like concat('%', #{param1}, '%')
+            </if>
+            <if test='param2 != null'>
+                AND `gender` = #{param2}
+            </if>
+        </where>
+    </select>
+
+    <select id="findBySingleParam" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <if test='_parameter != null'>
+                AND `name` like concat('%', #{param1}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findByMultipleParam" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <if test='_parameter.get("param1") != null'>
+                AND `name` like concat('%', #{param1}, '%')
+            </if>
+            <if test='_parameter.get("param2") != null'>
+                AND `gender` = #{param2}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByMultiplePojoParam" resultType="user">
+        SELECT `id`, `name`, `gender`, `age`, `info` FROM mybatis.`user`
+        <where>
+            <if test='_parameter.param1.name != null'>
+                AND `name` like concat('%', #{param1.name}, '%')
+            </if>
+            <if test='_parameter.param2.gender != null'>
+                AND `gender` = #{param2.gender}
+            </if>
+        </where>
     </select>
 
 </mapper>
