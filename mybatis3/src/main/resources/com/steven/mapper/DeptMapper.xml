@@ -1,0 +1,48 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.mapper.DeptMapper">
+    <!--二级缓存-->
+    <cache readOnly="true" size="1024"/>
+
+    <select id="findByDeptNo" resultType="dept">
+        SELECT `deptno`, `dname`, `loc` FROM mybatis.`dept`
+        <where>
+            <if test='_parameter != null'>
+                `deptno` = #{param1}
+            </if>
+        </where>
+    </select>
+
+    <select id="findWithEmpsByJoin" resultMap="dept-emp-join">
+        SELECT e.`empno`, e.`ename`, e.`job`, e.`mgr`, e.`hiredate`, e.`sal`, e.`comm`, d.`deptno`, d.`dname`, d.`loc`
+        FROM mybatis.`emp` e
+                 RIGHT JOIN mybatis.`dept` d ON e.deptno = d.deptno
+    </select>
+
+    <select id="findWithEmpsBySelect" resultMap="dept-emp-select">
+        SELECT  `deptno`, `dname`, `loc`
+        FROM  mybatis.`dept`
+    </select>
+
+    <resultMap id="dept-emp-join" type="dept">
+        <id property="deptno" column="deptno"/>
+        <result property="dname" column="dname"/>
+        <result property="loc" column="loc"/>
+        <collection property="emps" column="deptno" ofType="emp" jdbcType="INTEGER">
+            <id property="empno" column="empno"/>
+            <result property="ename" column="ename"/>
+            <result property="job" column="job"/>
+            <result property="sal" column="sal"/>
+            <result property="comm" column="comm"/>
+            <result property="mgr" column="mgr"/>
+            <result property="hiredate" column="hiredate"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="dept-emp-select" type="dept">
+        <collection property="emps" column="deptno" jdbcType="INTEGER"
+                    select="com.steven.mapper.EmpMapper.findByDeptno"/>
+    </resultMap>
+</mapper>

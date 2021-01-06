@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.mapper.EmpMapper">
+    <!--二级缓存-->
+    <cache readOnly="true" size="1024"/>
+
+    <select id="findEmpWithDeptByJoin" resultMap="emp-dept-join">
+        SELECT e.`empno`, e.`ename`, e.`job`, e.`mgr`, e.`hiredate`, e.`sal`, e.`comm`, d.`deptno`, d.`dname`, d.`loc`
+        FROM mybatis.`emp` e
+                 JOIN mybatis.`dept` d ON e.deptno = d.deptno
+    </select>
+
+    <select id="findEmpWithDeptBySelect" resultMap="emp-dept-select">
+        SELECT `empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`
+        FROM mybatis.`emp`
+    </select>
+
+    <select id="findByDeptno" resultType="emp">
+        SELECT e.`empno`, e.`ename`, e.`job`, e.`mgr`, e.`hiredate`, e.`sal`, e.`comm`, e.`deptno`
+        FROM mybatis.`emp` e
+        <where>
+            <if test='_parameter != null'>
+                `deptno` = #{param1}
+            </if>
+        </where>
+    </select>
+
+    <!--需要配置主键id和全部的字段result，否则实体类中对应的值为null-->
+    <resultMap id="emp-dept-join" type="emp">
+        <id column="empno" property="empno"/>
+        <result column="job" property="job"/>
+        <result column="ename" property="ename"/>
+        <result column="sal" property="sal"/>
+        <result column="comm" property="comm"/>
+        <result column="mgr" property="mgr"/>
+        <result column="hiredate" property="hiredate"/>
+
+        <!--deptno属性使用association来配置，其中javaType不能省略-->
+        <association property="dept" javaType="dept" column="dept">
+            <id column="deptno" property="deptno"/>
+            <result column="dname" property="dname"/>
+            <result column="loc" property="loc"/>
+        </association>
+
+    </resultMap>
+
+    <resultMap id="emp-dept-select" type="emp">
+        <association property="dept" javaType="dept" column="deptno" jdbcType="INTEGER"
+                     select="com.steven.mapper.DeptMapper.findByDeptNo"/>
+
+    </resultMap>
+
+</mapper>
