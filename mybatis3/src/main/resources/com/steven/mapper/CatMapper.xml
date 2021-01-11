@@ -2,18 +2,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="dogSpace">
+<mapper namespace="com.steven.mapper.CatMapper">
     <!--二级缓存-->
     <cache readOnly="true" size="1024"/>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO mybatis.`dog`
+        INSERT INTO mybatis.`cat`
         VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
     </insert>
 
-    <select id="findOne" resultType="dog">
-        SELECT `id`, `name`, `gender`, `age`, `info`
-        FROM mybatis.`dog`
+    <select id="findOne" resultType="cat">
+        SELECT id, `name`, `gender`, `age`, `info`
+        FROM mybatis.`cat`
         <where>
             <choose>
                 <when test='name != null'>
@@ -34,7 +34,7 @@
 
 
     <update id="updateById">
-        UPDATE mybatis.`dog`
+        UPDATE mybatis.`cat`
         <trim prefix="SET" suffixOverrides=",">
             <if test='name != null'>`name` = #{name},</if>
             <if test='age != null'>`age` = #{age},</if>
@@ -48,9 +48,9 @@
 
     <delete id="deleteOneById">
         DELETE
-        FROM mybatis.`dog`
+        FROM mybatis.`cat`
         <where>
-            <if test='_parameter != null'>
+            <if test='aa != null'>
                 `id` = #{param1}
             </if>
         </where>
