@@ -1,7 +1,7 @@
 package com.steven.sm;
 
-import com.steven.dao.DogDao;
-import com.steven.pojo.Dog;
+import com.steven.mapper.CatMapper;
+import com.steven.pojo.Cat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +13,29 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/spring-sm-dog.xml")
-public class DogTest {
+@ContextConfiguration("classpath:spring/spring-sm-cat.xml")
+public class CatTest {
 
     @Autowired
-    private DogDao dogDao;
+    private CatMapper catMapper;
 
     @Test
     public void insert() {
-        dogDao.insert(new Dog(2, "黑皮", 1, 5, "金毛"));
+        catMapper.insert(new Cat(2, "汤姆", 2, 15, "英短"));
     }
 
     @Test
     public void findOne() {
-        System.out.println(dogDao.findOne(new Dog(2, null, null, null, null)));
+        System.out.println(catMapper.findOne(new Cat(1, null, null, null, null)));
     }
 
     @Test
     public void updateById() {
-        dogDao.updateById(new Dog(1, "二蛋子", null, 6, null));
+        catMapper.updateById(new Cat(1, "二蛋子", 0, 2, "缅因"));
     }
 
     @Test
     public void deleteOneById() {
-        dogDao.deleteOneById(2);
+        catMapper.deleteOneById(2);
     }
 }
