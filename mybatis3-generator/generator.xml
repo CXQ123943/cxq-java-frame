@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--targetRuntime 用于指定运行环境-->
+    <context id="steven" targetRuntime="MyBatis3">
+
+        <!--为生成的实体类实现Serializable接口以及重写toString()-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!--配置mybatis主配文件-->
+        <plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+            <property name="fileName" value="mybatis.xml"/>
+            <property name="targetPackage" value="mybatis"/>
+            <property name="targetProject" value="mybatis3-generator\src\main\resources"/>
+        </plugin>
+
+        <!--镇压代码注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        userId="mybatis"
+                        password="mybatis"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mybatis">
+            <property name="useUnicode" value="true"/>
+            <property name="characterEncoding" value="utf-8"/>
+            <property name="serverTimezone" value="UTC"/>
+            <!--别名生效-->
+            <property name="useOldAliasMetadataBehavior" value="true"/>
+
+            <!--true表示仅生成指定数据库中的指定表，false表示生成所有数据库中的同名表-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!--true表示将decimal和numberic类型解析为java.math.BigDecimal-->
+            <!--false表示将decimal和numberic类型解析为java.math.Integer，默认-->
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!--实体类配置-->
+        <javaModelGenerator targetProject="mybatis3-generator\src\main\java" targetPackage="com.steven.generator.pojo">
+
+            <!--不生成 "schema" 子包-->
+            <property name="enableSubPackages" value="false"/>
+
+            <!--清理从数据库返回的值的前后空格-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--SQL配置文件配置-->
+        <sqlMapGenerator targetProject="mybatis3-generator\src\main\resources" targetPackage="com.steven.generator.mapper">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--Mapper接口配置-->
+        <javaClientGenerator type="XMLMAPPER" targetProject="mybatis3-generator\src\main\java" targetPackage="com.steven.generator.mapper">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--数据库表配置-->
+        <table schema="mybatis" tableName="user">
+            <!--将数据库字段id映射为java.lang.Integer类型-->
+            <columnOverride column="id" javaType="java.lang.Integer"/>
+            <columnOverride column="gender" javaType="java.lang.Integer"/>
+        </table>
+
+    </context>
+
+</generatorConfiguration>
