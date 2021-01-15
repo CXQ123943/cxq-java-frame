@@ -25,6 +25,6 @@ public class ExceptionController {
     public String exceptionHandler(Exception e) {
         System.out.println("exceptionHandler()...");
         e.printStackTrace();
-        return "err";
+        return "error";
     }
 }
