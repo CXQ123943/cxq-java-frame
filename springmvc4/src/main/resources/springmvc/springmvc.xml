@@ -62,6 +62,11 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames" value="i18n"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
     <!--包扫描-->
     <context:component-scan base-package="com.steven.controller"/>
     <context:component-scan base-package="com.steven.util"/>
