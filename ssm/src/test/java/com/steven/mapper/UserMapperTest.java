@@ -20,7 +20,12 @@ public class UserMapperTest {
 
     @Test
     public void findById() {
-        System.out.println(userMapper.findById(21));
+        System.out.println(userMapper.findById(5));
+    }
+
+    @Test
+    public void findAll() {
+        System.out.println(userMapper.findAll());
     }
 
     @Test

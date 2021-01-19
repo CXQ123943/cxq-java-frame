@@ -1,9 +1,7 @@
 package com.steven.service;
 
+import com.github.pagehelper.PageInfo;
 import com.steven.pojo.User;
-import com.steven.util.PagingUtil;
-
-import java.util.List;
 
 /**
  * @author StevenChen
@@ -14,10 +12,11 @@ public interface UserService {
     /**
      * 分页查询
      *
-     * @param pagingutil 分页实体
+     * @param pageNum 显示第几页
+     * @param pageSize 每页显示几条
      * @return 返回分页查询结果集合
      */
-    List<User> paging(PagingUtil pagingutil);
+    PageInfo<User> paging(Integer pageNum, Integer pageSize);
 
     /**
      * 通过主键查询一条数据

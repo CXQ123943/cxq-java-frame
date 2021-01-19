@@ -20,6 +20,13 @@ public interface UserMapper {
     User findById(int id);
 
     /**
+     * 查询所有数据
+     *
+     * @return 所有数据
+     */
+    List<User> findAll();
+
+    /**
      * 添加一条数据
      *
      * @param user 用户实例

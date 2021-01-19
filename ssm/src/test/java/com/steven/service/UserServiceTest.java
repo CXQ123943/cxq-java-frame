@@ -1,7 +1,6 @@
 package com.steven.service;
 
 import com.steven.pojo.User;
-import com.steven.util.PagingUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,7 @@ public class UserServiceTest {
 
     @Test
     public void paging() {
-        for (User e: userService.paging(new PagingUtil()))
-        System.out.println(e);
+        System.out.println("::::::::::::::::::::::::::" + userService.paging(1, 5));
     }
 
     @Test

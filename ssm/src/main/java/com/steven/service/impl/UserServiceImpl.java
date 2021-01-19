@@ -1,16 +1,14 @@
 package com.steven.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.steven.mapper.UserMapper;
 import com.steven.pojo.User;
 import com.steven.service.UserService;
 import com.steven.util.NullUtil;
-import com.steven.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author CXQ
@@ -27,19 +25,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> paging(PagingUtil pagingutil) {
-        if (NullUtil.isNull(pagingutil)) {
-            return new ArrayList<>();
+    public PageInfo<User> paging(Integer pageNum, Integer pageSize) {
+        if (NullUtil.isNull(pageNum) || NullUtil.isNull(pageSize)) {
+            return new PageInfo<>();
         }
-
-        List<User> result = userMapper.paging(pagingutil.getLimitSuffix());
-        if (NullUtil.isNull(result)) {
-            return new ArrayList<>();
-        }
-        pagingutil.buildTotalAndPages(userMapper.count());
-        pagingutil.buildPageList();
-
-        return result;
+        PageHelper.startPage(pageNum, pageSize);
+        return new PageInfo<>(userMapper.findAll());
     }
 
     @Override
