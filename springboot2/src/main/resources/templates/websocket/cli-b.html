@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户B</title>
+</head>
+<body>
+<section>
+    <h1>用户B</h1>
+    <button type="button" onclick="login()">上线</button>
+    <button type="button" onclick="logoff()">下线</button>
+    <label>
+        <input id="msg-ipt"/>
+    </label>
+    <button type="button" onclick="send()">发送</button>
+</section>
+
+<script type="text/javascript">
+
+    let socket, msgIpt;
+
+    onload = () => {
+        msgIpt = document.getElementById("msg-ipt");
+    };
+
+    function login() {
+        if (!WebSocket) {
+            alert("浏览器不支持WebSocket");
+        } else {
+            // 使用ws://协议连接S端，并传递B端id过去
+            socket = new WebSocket("ws://localhost:8080/websocket-server/B");
+            socket.onopen = () => console.log("客户端:用户B上线...");
+            socket.onclose = () => console.log("客户端:用户B下线...");
+            socket.onerror = () => console.log("客户端:发生错误...");
+        }
+    }
+
+    function logoff() {
+        if (socket) {
+            socket.close();
+        }
+    }
+
+    function send() {
+        if (socket) {
+            socket.send(massage.value);
+            socket.onmessage = (message) => {
+                console.log("服务端: " + message["data"])
+            };
+        }
+    }
+
+</script>
+</body>
+</html>

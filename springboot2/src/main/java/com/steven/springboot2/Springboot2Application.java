@@ -1,13 +1,17 @@
 package com.steven.springboot2;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * @author CXQ
  * @version 1.0
  */
 @SpringBootApplication
+@MapperScan("com.steven.springboot2.mapper")
 public class Springboot2Application {
 
     public static void main(String[] args) {
@@ -15,3 +19,14 @@ public class Springboot2Application {
     }
 
 }
+
+
+/*@SpringBootApplication
+@MapperScan("com.steven.springboot2.mapper")
+public class Springboot2Application extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(Springboot2Application.class);
+    }
+}*/
+

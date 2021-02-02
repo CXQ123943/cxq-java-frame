@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.springboot2.mapper.StudentMapper">
+
+    <sql id="*">
+        `id`, `name`, `gender`, `age`, `info`
+    </sql>
+
+    <select id="selectById" resultType="Student">
+        select
+        <include refid="*"/>
+        from springboot.`student` where id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO springboot.`student`
+        (<include refid="*"/>)
+        VALUE (#{id}, #{name}, #{gender}, #{age}, #{info})
+    </insert>
+
+    <update id="updateById">
+        UPDATE springboot.`student`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test='name != null'>
+                `name` = #{name},
+            </if>
+            <if test='age != null'>
+                `age` = #{age},
+            </if>
+            <if test='gender != null'>
+                `gender` = #{gender},
+            </if>
+            <if test='info != null'>
+                `info` = #{info},
+            </if>
+        </trim>
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        DELETE
+        FROM springboot.`student` WHERE
+        <foreach collection="array" item="e" open=" id in (" separator="," close=")">
+            ${e}
+        </foreach>
+    </delete>
+
+</mapper>
