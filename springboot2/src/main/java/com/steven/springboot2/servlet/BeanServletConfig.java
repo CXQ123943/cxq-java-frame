@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author JoeZhou
+ * @author CXQ
+ * @version 1.0
  */
 @Configuration
 public class BeanServletConfig {

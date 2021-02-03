@@ -4,7 +4,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * @author JoeZhou
+ * @author CXQ
+ * @version 1.0
  */
 public class ContextListener implements ServletContextListener {
     @Override
