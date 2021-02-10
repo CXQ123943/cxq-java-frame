@@ -15,7 +15,6 @@ public class ScheduleTask {
 
     @Scheduled(fixedDelay = 3000)
     public void printDate() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(200L);
         System.out.println("current date: " + new Date());
     }
 }

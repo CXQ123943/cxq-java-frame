@@ -113,6 +113,41 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--jjwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+
+        <!--java-jwt-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+        <!--spring-web-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--spring-boot-starter-activemq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+
+        <!--pooled-jms-->
+        <dependency>
+            <groupId>org.messaginghub</groupId>
+            <artifactId>pooled-jms</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

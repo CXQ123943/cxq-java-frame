@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.springboot2.mapper.UserMapper">
+
+    <sql id="*">
+        `id`, `username`, `password`, `avatar`
+    </sql>
+
+    <select id="selectById" resultType="com.steven.springboot2.jwt.User">
+        select
+        <include refid="*"/>
+        from springboot.`user` where id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO springboot.`user`
+        (<include refid="*"/>)
+        VALUE (#{id}, #{username}, #{password}, #{avatar})
+    </insert>
+
+    <update id="updateById">
+        UPDATE springboot.`user`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test='username != null'>
+                `username` = #{username},
+            </if>
+            <if test='password != null'>
+                `password` = #{password},
+            </if>
+        </trim>
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        DELETE
+        FROM springboot.`user` WHERE
+        <foreach collection="array" item="e" open=" id in (" separator="," close=")">
+            ${e}
+        </foreach>
+    </delete>
+
+</mapper>

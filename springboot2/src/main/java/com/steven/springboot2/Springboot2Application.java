@@ -10,6 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -27,6 +28,7 @@ import java.util.EnumSet;
 @ServletComponentScan("com.steven.springboot2.servlet")
 @EnableScheduling
 @EnableAsync
+@EnableJms
 public class Springboot2Application implements ServletContextInitializer {
 
     public static void main(String[] args) {
