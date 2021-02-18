@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.jms.Destination;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author CXQ
@@ -24,9 +25,11 @@ public class ProducerController {
     }
 
     @RequestMapping("send-to-queue")
-    public Object sendToQueue(String message) {
-        Destination dest = new ActiveMQQueue("start.queue");
-        producerA.sendToQueue(dest, message);
-         return "success";
+    public Object sendToQueue(String msg) throws InterruptedException {
+        for (int i = 0, j = 10; i < j; i++) {
+            TimeUnit.SECONDS.sleep(1L);
+            producerA.sendToQueue("start.queue", msg + "-" + i);
+        }
+        return "sendToQueue() success";
     }
 }

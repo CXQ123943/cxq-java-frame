@@ -1,5 +1,6 @@
 package com.steven.springboot2.activemq.producer;
 
+import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,8 @@ public class ProducerA {
         this.jmsMessagingTemplate = jmsMessagingTemplate;
     }
 
-    public void sendToQueue(Destination destination, final Object message) {
-        jmsMessagingTemplate.convertAndSend(destination, message);
+    public void sendToQueue(String destination, final Object message) {
+        Destination dest = new ActiveMQQueue(destination);
+        jmsMessagingTemplate.convertAndSend(dest, message);
     }
 }
