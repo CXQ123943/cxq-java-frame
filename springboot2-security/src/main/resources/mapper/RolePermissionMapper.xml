@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.steven.springboot2security.mapper.RolePermissionMapper">
+
+    <sql id="*">
+        `id`, `role_id`, `permission_id`
+    </sql>
+
+    <resultMap id="rolePermission" type="rolePermission">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <association property="roleId" javaType="role" column="role_id"
+                     select="com.steven.springboot2security.mapper.RoleMapper.selectById"/>
+        <association property="permissionId" javaType="permission" column="permission_id"
+                     select="com.steven.springboot2security.mapper.PermissionMapper.selectById"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="rolePermission">
+        select
+        <include refid="*"/>
+        from springboot_security.`role_permission` where role_id = #{roleId}
+    </select>
+
+</mapper>
